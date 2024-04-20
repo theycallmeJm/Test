@@ -1,38 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import TaskList from './TaskList';
+import TaskDetail from './TaskDetail';
+import AddTaskForm from './AddTaskForm';
+import EditTaskForm from './EditTaskForm';
 
-const EditTaskForm = ({ task, onUpdateTask }) => {
-  const [editedTask, setEditedTask] = useState(task);
-
-  useEffect(() => {
-    setEditedTask(task);
-  }, [task]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedTask({ ...editedTask, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onUpdateTask(editedTask);
-  };
-
+const Page = () => {
   return (
-    <div>
-      <h2>Edit Task</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Title:</label>
-        <input type="text" name="title" value={editedTask.title} onChange={handleChange} required />
-        <label>Description:</label>
-        <textarea name="description" value={editedTask.description} onChange={handleChange} required />
-        <label>Due Date:</label>
-        <input type="date" name="dueDate" value={editedTask.dueDate} onChange={handleChange} required />
-        <label>Status:</label>
-        <input type="text" name="status" value={editedTask.status} onChange={handleChange} required />
-        <button type="submit">Update Task</button>
-      </form>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={TaskList} />
+        <Route path="/task/:taskId" component={TaskDetail} />
+        <Route path="/add-task" component={AddTaskForm} />
+        <Route path="/edit-task/:taskId" component={EditTaskForm} />
+      </Switch>
+    </Router>
   );
 };
 
-export default EditTaskForm;
+export default Page;
