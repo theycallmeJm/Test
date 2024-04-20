@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import TaskList from './TaskList';
 import TaskDetail from './TaskDetail';
 import AddTaskForm from './AddTaskForm';
@@ -9,7 +9,8 @@ const Page = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={TaskList} />
+        <Redirect exact from="/" to="/tasks" />
+        <Route path="/tasks" component={TaskList} />
         <Route path="/task/:taskId" component={TaskDetail} />
         <Route path="/add-task" component={AddTaskForm} />
         <Route path="/edit-task/:taskId" component={EditTaskForm} />
