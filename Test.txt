@@ -1,36 +1,26 @@
-import React, { useState } from 'react';
-import { Route, Link } from 'react-router-dom';
-import TaskList from './TaskList';
-import TaskDetail from './TaskDetail';
-import AddTaskForm from './AddTaskForm';
-import EditTaskForm from './EditTaskForm';
+import React, { useState, useEffect } from 'react';
 
-const Pages = () => {
+const TaskList = () => {
   const [tasks, setTasks] = useState([]);
 
-  const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask]);
-  };
-
-  const handleUpdateTask = (updatedTask) => {
-    const updatedTasks = tasks.map(task => (task.id === updatedTask.id ? updatedTask : task));
-    setTasks(updatedTasks);
-  };
+  useEffect(() => {
+    // Fetch tasks from the mock API
+    fetch('https://api.example.com/tasks')
+      .then(response => response.json())
+      .then(data => setTasks(data))
+      .catch(error => console.error('Error fetching tasks:', error));
+  }, []);
 
   return (
     <div>
-      <nav>
-        <ul>
-          <li><Link to="/">Task List</Link></li>
-          <li><Link to="/add-task">Add Task</Link></li>
-        </ul>
-      </nav>
-      <Route exact path="/" render={() => <TaskList tasks={tasks} />} />
-      <Route path="/task/:taskId" render={({ match }) => <TaskDetail task={tasks.find(task => task.id === parseInt(match.params.taskId))} />} />
-      <Route path="/add-task" render={() => <AddTaskForm onAddTask={handleAddTask} />} />
-      <Route path="/edit-task/:taskId" render={({ match }) => <EditTaskForm task={tasks.find(task => task.id === parseInt(match.params.taskId))} onUpdateTask={handleUpdateTask} />} />
+      <h2>Task List</h2>
+      <ul>
+        {tasks.map(task => (
+          <li key={task.id}>{task.title}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Pages;
+export default TaskList;
