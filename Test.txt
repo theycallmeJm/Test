@@ -1,16 +1,29 @@
-/* TaskDetail.css */
+// TaskList.jsx
 
-.task-detail {
-  max-width: 600px;
-  margin: 0 auto;
-  border: 1px solid #ccc;
-  padding: 20px;
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './TaskList.css'; // Import the CSS file for TaskList
+
+function TaskList({ tasks }) {
+  return (
+    <div className="task-list-container">
+      <h1>To-Do List</h1>
+      <div className="task-grid">
+        {tasks.map((task) => (
+          <div className="task-card" key={task.id}>
+            <div className="task-header">
+              <h3 className="task-title">{task.title}</h3>
+              <span className="client-name">{task.client}</span>
+            </div>
+            <div className="task-footer">
+              <Link className="task-button" to={`/tasks/${task.id}`}>View</Link>
+              <button className="task-button">Edit</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-.task-title {
-  margin-top: 0;
-}
-
-.task-description {
-  color: #666;
-}
+export default TaskList;
