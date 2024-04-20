@@ -1,24 +1,23 @@
-/* TaskList.css */
+// TaskDetail.jsx
 
-.task-list-container {
-  max-width: 600px;
-  margin: 0 auto;
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import './TaskDetail.css'; // Import the CSS file for TaskDetail
+
+function TaskDetail({ tasks }) {
+  const { taskId } = useParams();
+  const task = tasks.find((task) => task.id === parseInt(taskId));
+
+  if (!task) {
+    return <div className="task-detail">Task not found</div>;
+  }
+
+  return (
+    <div className="task-detail">
+      <h1 className="task-title">{task.title}</h1>
+      <p className="task-description">{task.description}</p>
+    </div>
+  );
 }
 
-.task-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.task-item {
-  margin-bottom: 10px;
-}
-
-.task-link {
-  text-decoration: none;
-  color: #333;
-}
-
-.task-link:hover {
-  text-decoration: underline;
-}
+export default TaskDetail;
