@@ -1,27 +1,38 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import TaskDetail from './TaskDetail';
 
-const TaskDetail = ({ tasks }) => {
-  const { taskId } = useParams();
+const TaskList = () => {
+  const [tasks, setTasks] = useState([]);
 
-  // Use taskId to find the task with the matching ID
-  const task = tasks.find(task => task.id === parseInt(taskId));
+  // Function to fetch tasks from the API
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = () => {
+    fetch('https://api.example.com/tasks')
+      .then(response => response.json())
+      .then(data => setTasks(data))
+      .catch(error => console.error('Error fetching tasks:', error));
+  };
 
   return (
     <div>
-      <h2>Task Details</h2>
-      {task ? (
-        <div>
-          <p>Title: {task.title}</p>
-          <p>Description: {task.description}</p>
-          <p>Due Date: {task.dueDate}</p>
-          <p>Status: {task.status}</p>
-        </div>
-      ) : (
-        <p>No task found with ID {taskId}</p>
-      )}
+      <h2>Task List</h2>
+      <ul>
+        {/* Render each task from the tasks state */}
+        {tasks.map(task => (
+          <li key={task.id}>
+            {/* Link to TaskDetail with taskId as URL param */}
+            <Link to={`/task/${task.id}`}>{task.title}</Link>
+          </li>
+        ))}
+      </ul>
+      {/* Render TaskDetail component and pass tasks data as props */}
+      <TaskDetail tasks={tasks} />
     </div>
   );
 };
 
-export default TaskDetail;
+export default TaskList;
