@@ -1,22 +1,24 @@
-// TaskList.jsx
+/* TaskList.css */
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './TaskList.css'; // Import the CSS file for TaskList
-
-function TaskList({ tasks }) {
-  return (
-    <div className="task-list-container">
-      <h1>Task List</h1>
-      <ul className="task-list">
-        {tasks.map((task) => (
-          <li className="task-item" key={task.id}>
-            <Link className="task-link" to={`/tasks/${task.id}`}>{task.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+.task-list-container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-export default TaskList;
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-item {
+  margin-bottom: 10px;
+}
+
+.task-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.task-link:hover {
+  text-decoration: underline;
+}
