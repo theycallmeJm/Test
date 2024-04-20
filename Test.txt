@@ -1,23 +1,16 @@
-// TaskDetail.jsx
+/* TaskDetail.css */
 
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import './TaskDetail.css'; // Import the CSS file for TaskDetail
-
-function TaskDetail({ tasks }) {
-  const { taskId } = useParams();
-  const task = tasks.find((task) => task.id === parseInt(taskId));
-
-  if (!task) {
-    return <div className="task-detail">Task not found</div>;
-  }
-
-  return (
-    <div className="task-detail">
-      <h1 className="task-title">{task.title}</h1>
-      <p className="task-description">{task.description}</p>
-    </div>
-  );
+.task-detail {
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  padding: 20px;
 }
 
-export default TaskDetail;
+.task-title {
+  margin-top: 0;
+}
+
+.task-description {
+  color: #666;
+}
