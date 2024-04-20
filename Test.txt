@@ -1,21 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const TaskDetail = ({ task }) => {
+const AddTaskForm = ({ onAddTask }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Create a new task object
+    const newTask = {
+      title: title,
+      description: description,
+      dueDate: dueDate,
+      status: status
+    };
+    // Pass the new task to the parent component
+    onAddTask(newTask);
+    // Reset form fields
+    setTitle('');
+    setDescription('');
+    setDueDate('');
+    setStatus('');
+  };
+
   return (
     <div>
-      <h2>Task Details</h2>
-      {task ? (
-        <div>
-          <p>Title: {task.title}</p>
-          <p>Description: {task.description}</p>
-          <p>Due Date: {task.dueDate}</p>
-          <p>Status: {task.status}</p>
-        </div>
-      ) : (
-        <p>No task selected</p>
-      )}
+      <h2>Add Task</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Title:</label>
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+        <label>Description:</label>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+        <label>Due Date:</label>
+        <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} required />
+        <label>Status:</label>
+        <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} required />
+        <button type="submit">Add Task</button>
+      </form>
     </div>
   );
 };
 
-export default TaskDetail;
+export default AddTaskForm;
