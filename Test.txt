@@ -1,53 +1,29 @@
-/* TaskList.css */
+// TaskList.jsx
 
-.task-list-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './TaskList.css'; // Import the CSS file for TaskList
+
+function TaskList({ tasks }) {
+  return (
+    <div className="task-list-container">
+      <h1>To-Do List</h1>
+      <div className="task-grid">
+        {tasks.map((task) => (
+          <div className={`task-card ${task.completed ? 'completed' : 'incomplete'}`} key={task.id}>
+            <div className="task-header">
+              <h3 className="task-title">{task.title}</h3>
+              <span className="task-status">{task.completed ? 'Completed' : 'Incomplete'}</span>
+            </div>
+            <div className="task-footer">
+              <Link className="task-button" to={`/tasks/${task.id}`}>View</Link>
+              <button className="task-button">Edit</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-.task-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.task-card {
-  background-color: #f3f4f6;
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.task-title {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.client-name {
-  color: #666;
-}
-
-.task-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.task-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #6c5ce7;
-  color: white;
-  cursor: pointer;
-}
-
-.task-button:hover {
-  background-color: #574b90;
-}
+export default TaskList;
