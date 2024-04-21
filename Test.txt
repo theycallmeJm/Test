@@ -1,14 +1,12 @@
-// Header.jsx
+/* Header.css */
 
-import React from 'react';
-import './Header.css'; // Import the CSS file for the header
-
-function Header() {
-  return (
-    <header className="header">
-      <h1 className="header-title">Task Manager</h1>
-    </header>
-  );
+.header {
+  background-color: #6c5ce7; /* Purple color for the header */
+  color: white;
+  padding: 20px;
+  text-align: center;
 }
 
-export default Header;
+.header-title {
+  margin: 0;
+}
