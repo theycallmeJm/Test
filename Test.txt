@@ -1,65 +1,37 @@
-/* Header.css */
+<!-- Header.jsx -->
 
-/* Other styles remain the same */
+import React, { useState } from 'react';
+import './Header.css'; // Import the CSS file for the header
 
-.menu-icon {
-  display: none; /* Hide the menu icon by default */
-  cursor: pointer;
+function Header() {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  return (
+    <header className="header">
+      <div className="container">
+        <div className="logo">
+          <img src="logo.png" alt="Logo" className="logo-img" />
+          <span className="logo-text">Task Manager</span>
+        </div>
+        <nav className={`nav ${showMenu ? 'show' : ''}`}>
+          <ul className="nav-list">
+            <li className="nav-item"><a href="#home" className="nav-link">Home</a></li>
+            <li className="nav-item"><a href="#about" className="nav-link">About</a></li>
+            <li className="nav-item"><a href="#contact" className="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <div className="menu-icon" onClick={toggleMenu}>
+          <div className={`menu-line ${showMenu ? 'open' : ''}`}></div>
+          <div className={`menu-line ${showMenu ? 'open' : ''}`}></div>
+          <div className={`menu-line ${showMenu ? 'open' : ''}`}></div>
+        </div>
+      </div>
+    </header>
+  );
 }
 
-.menu-line {
-  width: 30px;
-  height: 3px;
-  background-color: #333;
-  margin: 5px;
-  transition: all 0.3s ease;
-}
-
-@media screen and (max-width: 768px) {
-  /* Other styles remain the same */
-
-  .nav {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px; /* Adjust as needed based on header height */
-    left: 0;
-    width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .nav.show {
-    display: flex;
-  }
-
-  .nav-list {
-    padding: 0;
-  }
-
-  .nav-item {
-    margin: 10px 0;
-    text-align: center;
-  }
-
-  .nav-link {
-    color: #333333;
-    text-decoration: none;
-  }
-
-  .menu-icon {
-    display: block; /* Show the menu icon on smaller screens */
-  }
-
-  .open:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .open:nth-child(2) {
-    opacity: 0;
-  }
-
-  .open:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
-}
+export default Header;
