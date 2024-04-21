@@ -1,29 +1,14 @@
-// TaskDetail.jsx
+// Header.jsx
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import './TaskDetail.css'; // Import the CSS file for TaskDetail
+import './Header.css'; // Import the CSS file for the header
 
-function TaskDetail({ tasks }) {
-  const { taskId } = useParams();
-  const task = tasks.find((task) => task.id === parseInt(taskId));
-
-  if (!task) {
-    return <div className="task-detail">Task not found</div>;
-  }
-
+function Header() {
   return (
-    <div className="task-detail">
-      <h1 className="task-title">{task.title}</h1>
-      <p className="task-description">{task.description}</p>
-      <div className="task-meta">
-        <span className={`task-status ${task.completed ? 'completed' : 'incomplete'}`}>
-          {task.completed ? 'Completed' : 'Incomplete'}
-        </span>
-        <span className="task-date">Due: {task.dueDate}</span>
-      </div>
-    </div>
+    <header className="header">
+      <h1 className="header-title">Task Manager</h1>
+    </header>
   );
 }
 
-export default TaskDetail;
+export default Header;
