@@ -1,29 +1,44 @@
-// TaskDetail.jsx
+/* TaskDetail.css */
 
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import './TaskDetail.css'; // Import the CSS file for TaskDetail
-
-function TaskDetail({ tasks }) {
-  const { taskId } = useParams();
-  const task = tasks.find((task) => task.id === parseInt(taskId));
-
-  if (!task) {
-    return <div className="task-detail">Task not found</div>;
-  }
-
-  return (
-    <div className="task-detail">
-      <h1 className="task-title">{task.title}</h1>
-      <p className="task-description">{task.description}</p>
-      <div className="task-meta">
-        <span className={`task-status ${task.completed ? 'completed' : 'incomplete'}`}>
-          {task.completed ? 'Completed' : 'Incomplete'}
-        </span>
-        <span className="task-date">Due: {task.dueDate}</span>
-      </div>
-    </div>
-  );
+.task-detail {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-export default TaskDetail;
+.task-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.task-description {
+  color: #666;
+}
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.task-status {
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.completed .task-status {
+  background-color: #4caf50; /* Green color for completed tasks */
+}
+
+.incomplete .task-status {
+  background-color: #f44336; /* Red color for incomplete tasks */
+}
+
+.task-date {
+  color: #666;
+}
