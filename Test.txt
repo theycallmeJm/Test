@@ -1,12 +1,26 @@
-/* Header.css */
+<!-- Header.jsx -->
 
-.header {
-  background-color: #6c5ce7; /* Purple color for the header */
-  color: white;
-  padding: 20px;
-  text-align: center;
+import React from 'react';
+import './Header.css'; // Import the CSS file for the header
+
+function Header() {
+  return (
+    <header className="header">
+      <div className="container">
+        <div className="logo">
+          <img src="logo.png" alt="Logo" className="logo-img" />
+          <span className="logo-text">Task Manager</span>
+        </div>
+        <nav className="nav">
+          <ul className="nav-list">
+            <li className="nav-item"><a href="#home" className="nav-link">Home</a></li>
+            <li className="nav-item"><a href="#about" className="nav-link">About</a></li>
+            <li className="nav-item"><a href="#contact" className="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
 }
 
-.header-title {
-  margin: 0;
-}
+export default Header;
