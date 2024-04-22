@@ -1,113 +1,66 @@
-/* Header.css */
+import React, { useState } from 'react';
 
-.header {
-  background-color: #ffffff;
-  padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+const EditTaskForm = ({ task, onUpdateTask }) => {
+  // Initialize state for form data
+  const [formData, setFormData] = useState({
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    // Add more fields as needed
+  });
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  // Handle form field changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-.logo {
-  display: flex;
-  align-items: center;
-}
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Call onUpdateTask function with updated task data
+    onUpdateTask({
+      ...task,
+      ...formData,
+    });
+  };
 
-.logo-img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Title:</label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Description:</label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+        ></textarea>
+      </div>
+      <div>
+        <label>Status:</label>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleInputChange}
+        >
+          <option value="Incomplete">Incomplete</option>
+          <option value="Complete">Complete</option>
+        </select>
+      </div>
+      <button type="submit">Update Task</button>
+    </form>
+  );
+};
 
-.logo-text {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.nav-item {
-  margin-right: 20px;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #333333;
-}
-
-.menu-icon {
-  display: none; /* Hide the menu icon by default */
-  cursor: pointer;
-}
-
-.menu-line {
-  width: 30px;
-  height: 3px;
-  background-color: #333;
-  margin: 5px;
-  transition: all 0.3s ease;
-}
-
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 0 20px;
-  }
-
-  .nav {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .nav.show {
-    display: flex;
-  }
-
-  .nav-list {
-    padding: 0;
-  }
-
-  .nav-item {
-    margin: 10px 0;
-    text-align: center;
-  }
-
-  .nav-link {
-    color: #333333;
-    text-decoration: none;
-    padding: 10px; /* Add padding to the navigation links */
-    display: block; /* Make the navigation links block-level elements */
-  }
-
-  .menu-icon {
-    display: block; /* Show the menu icon on smaller screens */
-  }
-
-  .open:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .open:nth-child(2) {
-    opacity: 0;
-  }
-
-  .open:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
-}
+export default EditTaskForm;
