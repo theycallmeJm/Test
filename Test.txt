@@ -2,11 +2,10 @@
 
 .add-task {
   margin-left: auto; /* Push the plus sign to the right */
-  padding-right: 20px; /* Add some padding to the right of the plus sign */
 }
 
 .add-task a {
   color: #000; /* Set the color of the plus sign */
   text-decoration: none; /* Remove underline from the link */
-  font-size: 20px; /* Set the font size of the plus sign */
+  font-size: 24px; /* Set the font size of the plus sign */
 }
