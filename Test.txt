@@ -1,50 +1,52 @@
-/* EditTaskForm.css */
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
+import TaskList from './TaskList';
+import TaskDetail from './TaskDetail';
+import EditTaskForm from './EditTaskForm'; // Import EditTaskForm component
 
-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
+const App = () => {
+  const [tasks, setTasks] = useState([]);
 
-div {
-  margin-bottom: 15px;
-}
+  // Fetch tasks from mock API when component mounts
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get('/tasks'); // Assuming /tasks is the endpoint for fetching tasks
+        setTasks(response.data);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+    fetchTasks();
+  }, []);
 
-label {
-  display: block;
-  font-weight: bold;
-}
+  // Function to update task in state
+  const updateTaskInState = (updatedTask) => {
+    const updatedTasks = tasks.map((t) =>
+      t.id === updatedTask.id ? updatedTask : t
+    );
+    setTasks(updatedTasks);
+  };
 
-input[type="text"],
-textarea,
-select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-sizing: border-box;
-}
+  return (
+    <Router>
+      <div>
+        <h1>Task Manager</h1>
+        <Switch>
+          <Route exact path="/">
+            <TaskList tasks={tasks} />
+          </Route>
+          <Route exact path="/tasks/:taskId">
+            <TaskDetail tasks={tasks} />
+          </Route>
+          <Route exact path="/tasks/:taskId/edit">
+            <EditTaskForm onUpdateTask={updateTaskInState} />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button[type="submit"] {
-  background-color: #28a745;
-}
-
-button[type="submit"]:hover {
-  background-color: #218838;
-}
+export default App;
