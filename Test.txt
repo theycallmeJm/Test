@@ -1,37 +1,28 @@
-/* AddTaskForm.css */
+// app.jsx
 
-.form-container {
-  width: 300px;
-  margin: 0 auto;
-}
+import React, { useState } from 'react';
+import TaskList from './TaskList';
+import TaskDetail from './TaskDetail';
+import AddTaskForm from './AddTaskForm';
 
-.form-container div {
-  margin-bottom: 10px;
-}
+const App = () => {
+  const [tasks, setTasks] = useState([]); // Assuming tasks state is managed here
 
-.form-container label {
-  display: block;
-  margin-bottom: 5px;
-}
+  // Function to handle form submission and add a new task
+  const handleAddTask = (newTask) => {
+    setTasks([...tasks, newTask]);
+  };
 
-.form-container input[type="text"],
-.form-container select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+  // Assuming other functions and state for task management are defined here
 
-.form-container button {
-  background-color: purple;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+  return (
+    <div>
+      <h1>Task Manager</h1>
+      <AddTaskForm onSubmit={handleAddTask} latestId={tasks.length ? tasks[tasks.length - 1].id : 0} />
+      <TaskList tasks={tasks} />
+      <TaskDetail /> {/* Assuming TaskDetail component is rendered somewhere */}
+    </div>
+  );
+};
 
-.form-container button:hover {
-  background-color: #4b0082; /* Darker purple on hover */
-}
+export default App;
