@@ -4,6 +4,7 @@
 .to-do-list {
   display: flex; /* Make the container flex */
   align-items: center; /* Align items vertically */
+  justify-content: space-between; /* Space items evenly, pushing "Add" button to the right */
 }
 
 /* Style for the "To-Do List" text */
