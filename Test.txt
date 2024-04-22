@@ -1,11 +1,31 @@
-/* AddTask.css */
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-.add-task {
-  margin-left: auto; /* Push the plus sign to the right */
-}
+const TaskList = ({ tasks }) => {
+  return (
+    <div className="task-list-container">
+      <div className="to-do-list">
+        <h1>To-Do List</h1>
+        <Link to="/tasks/add">
+          <span role="img" aria-label="Add Task">➕</span>
+        </Link>
+      </div>
+      <div className="task-grid">
+        {tasks.map((task) => (
+          <div className={`task-card ${task.completed ? 'completed' : 'incomplete'}`} key={task.id}>
+            <div className="task-header">
+              <h3 className="task-list-title">{task.title}</h3>
+              <span className="taskList-status">{task.completed ? 'Completed' : 'Incomplete'}</span>
+            </div>
+            <div className="task-footer">
+              <Link className="task-button" to={`/tasks/${task.id}`}>View</Link>
+              <Link className="task-button" to={`/tasks/edit/${task.id}`}>Edit</Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-.add-task a {
-  color: #000; /* Set the color of the plus sign */
-  text-decoration: none; /* Remove underline from the link */
-  font-size: 24px; /* Set the font size of the plus sign */
-}
+export default TaskList;
