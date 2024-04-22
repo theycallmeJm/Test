@@ -1,29 +1,41 @@
 // AddTaskForm.jsx
 
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const AddTaskForm = ({ onSubmit }) => {
+const AddTaskForm = ({ onSubmit, latestId }) => {
   const [formData, setFormData] = useState({
     title: '',
-    dueDate: '',
-    status: 'Incomplete'
+    dueDate: new Date(),
+    status: false
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value === 'true' ? true : false
+    });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      dueDate: date
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit({
+      ...formData,
+      id: latestId + 1
+    });
     setFormData({
       title: '',
-      dueDate: '',
-      status: 'Incomplete'
+      dueDate: new Date(),
+      status: false
     });
   };
 
@@ -41,11 +53,10 @@ const AddTaskForm = ({ onSubmit }) => {
       </div>
       <div>
         <label>Due Date:</label>
-        <input
-          type="date"
-          name="dueDate"
-          value={formData.dueDate}
-          onChange={handleInputChange}
+        <DatePicker
+          selected={formData.dueDate}
+          onChange={handleDateChange}
+          dateFormat="yyyy-MM-dd"
           required
         />
       </div>
@@ -53,12 +64,12 @@ const AddTaskForm = ({ onSubmit }) => {
         <label>Status:</label>
         <select
           name="status"
-          value={formData.status}
+          value={formData.status.toString()}
           onChange={handleInputChange}
           required
         >
-          <option value="Incomplete">Incomplete</option>
-          <option value="Complete">Complete</option>
+          <option value="false">Incomplete</option>
+          <option value="true">Complete</option>
         </select>
       </div>
       <button type="submit">Add Task</button>
