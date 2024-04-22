@@ -1,28 +1,69 @@
-/* TaskList.css */
+// AddTaskForm.jsx
 
-/* Style for the container of "To-Do List" and "Add" button */
-.to-do-list {
-  display: flex; /* Make the container flex */
-  align-items: center; /* Align items vertically */
-  justify-content: space-between; /* Space items evenly, pushing "Add" button to the right */
-}
+import React, { useState } from 'react';
 
-/* Style for the "To-Do List" text */
-.to-do-list h1 {
-  margin-right: 10px; /* Add some space between the text and the button */
-}
+const AddTaskForm = ({ onSubmit }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    dueDate: '',
+    status: 'Incomplete'
+  });
 
-/* Style for the "Add" button */
-.to-do-list button {
-  background-color: purple; /* Set background color to purple */
-  color: white; /* Set text color to white */
-  border: none; /* Remove border */
-  padding: 10px 20px; /* Add padding */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  cursor: pointer; /* Change cursor to pointer on hover */
-}
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
 
-/* Hover effect for the "Add" button */
-.to-do-list button:hover {
-  background-color: darkpurple; /* Darken the background color on hover */
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+    setFormData({
+      title: '',
+      dueDate: '',
+      status: 'Incomplete'
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Title:</label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Due Date:</label>
+        <input
+          type="date"
+          name="dueDate"
+          value={formData.dueDate}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Status:</label>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="Incomplete">Incomplete</option>
+          <option value="Complete">Complete</option>
+        </select>
+      </div>
+      <button type="submit">Add Task</button>
+    </form>
+  );
+};
+
+export default AddTaskForm;
