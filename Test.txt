@@ -46,6 +46,19 @@
   color: #333333;
 }
 
+.menu-icon {
+  display: none; /* Hide the menu icon by default */
+  cursor: pointer;
+}
+
+.menu-line {
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 20px;
@@ -78,5 +91,21 @@
   .nav-link {
     color: #333333;
     text-decoration: none;
+  }
+
+  .menu-icon {
+    display: block; /* Show the menu icon on smaller screens */
+  }
+
+  .open:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .open:nth-child(2) {
+    opacity: 0;
+  }
+
+  .open:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
   }
 }
