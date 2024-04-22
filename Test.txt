@@ -1,37 +1,82 @@
-<!-- Header.jsx -->
+/* Header.css */
 
-import React, { useState } from 'react';
-import './Header.css'; // Import the CSS file for the header
-
-function Header() {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
-
-  return (
-    <header className="header">
-      <div className="container">
-        <div className="logo">
-          <img src="logo.png" alt="Logo" className="logo-img" />
-          <span className="logo-text">Task Manager</span>
-        </div>
-        <nav className={`nav ${showMenu ? 'show' : ''}`}>
-          <ul className="nav-list">
-            <li className="nav-item"><a href="#home" className="nav-link">Home</a></li>
-            <li className="nav-item"><a href="#about" className="nav-link">About</a></li>
-            <li className="nav-item"><a href="#contact" className="nav-link">Contact</a></li>
-          </ul>
-        </nav>
-        <div className="menu-icon" onClick={toggleMenu}>
-          <div className={`menu-line ${showMenu ? 'open' : ''}`}></div>
-          <div className={`menu-line ${showMenu ? 'open' : ''}`}></div>
-          <div className={`menu-line ${showMenu ? 'open' : ''}`}></div>
-        </div>
-      </div>
-    </header>
-  );
+.header {
+  background-color: #ffffff;
+  padding: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-export default Header;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333333;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav.show {
+    display: flex;
+  }
+
+  .nav-list {
+    padding: 0;
+  }
+
+  .nav-item {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .nav-link {
+    color: #333333;
+    text-decoration: none;
+  }
+}
