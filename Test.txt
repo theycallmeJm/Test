@@ -1,29 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+/* AddTask.css */
 
-const Header = () => {
-  return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/tasks">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li className="add-task">
-            <Link to="/tasks/add">
-              <span role="img" aria-label="Add Task">➕</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  );
-};
+.add-task {
+  margin-left: auto; /* Push the plus sign to the right */
+  padding-right: 20px; /* Add some padding to the right of the plus sign */
+}
 
-export default Header;
+.add-task a {
+  color: #000; /* Set the color of the plus sign */
+  text-decoration: none; /* Remove underline from the link */
+  font-size: 20px; /* Set the font size of the plus sign */
+}
