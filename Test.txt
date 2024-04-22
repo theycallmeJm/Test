@@ -91,6 +91,8 @@
   .nav-link {
     color: #333333;
     text-decoration: none;
+    padding: 10px; /* Add padding to the navigation links */
+    display: block; /* Make the navigation links block-level elements */
   }
 
   .menu-icon {
