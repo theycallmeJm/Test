@@ -1,18 +1,20 @@
-import { updateTaskState } from './pages'; // Import the function to be tested
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import TaskList from './TaskList';
 
-describe('updateTaskState function', () => {
-  it('updates task state correctly', () => {
+describe('TaskList', () => {
+  test('renders a list of tasks', () => {
     const tasks = [
       { id: 1, title: 'Task 1', completed: false },
       { id: 2, title: 'Task 2', completed: true },
+      { id: 3, title: 'Task 3', completed: false },
     ];
 
-    const updatedTask = { id: 2, title: 'Updated Task 2', completed: false };
+    render(<TaskList tasks={tasks} />);
 
-    const updatedTasks = updateTaskState(tasks, updatedTask);
-
-    expect(updatedTasks).toHaveLength(2); // Ensure the length of the updated tasks array remains the same
-    expect(updatedTasks[1].title).toBe('Updated Task 2'); // Ensure the title of the updated task is correct
-    expect(updatedTasks[1].completed).toBe(false); // Ensure the completed status of the updated task is correct
+    tasks.forEach((task) => {
+      const taskElement = screen.getByText(task.title);
+      expect(taskElement).toBeInTheDocument();
+    });
   });
 });
