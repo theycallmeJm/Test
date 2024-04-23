@@ -1,20 +1,25 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import TaskList from './TaskList';
+import { MemoryRouter, Route } from 'react-router-dom';
+import TaskDetail from './TaskDetail';
 
-describe('TaskList', () => {
-  test('renders a list of tasks', () => {
-    const tasks = [
-      { id: 1, title: 'Task 1', completed: false },
-      { id: 2, title: 'Task 2', completed: true },
-      { id: 3, title: 'Task 3', completed: false },
-    ];
+describe('TaskDetail', () => {
+  test('renders task detail correctly', () => {
+    const task = { id: 1, title: 'Task 1', completed: false };
+    const route = '/tasks/1'; // Specify the route with the taskId parameter
 
-    render(<TaskList tasks={tasks} />);
+    render(
+      <MemoryRouter initialEntries={[route]}>
+        <Route path="/tasks/:taskId">
+          <TaskDetail />
+        </Route>
+      </MemoryRouter>
+    );
 
-    tasks.forEach((task) => {
-      const taskElement = screen.getByText(task.title);
-      expect(taskElement).toBeInTheDocument();
-    });
+    const titleElement = screen.getByText(task.title);
+    expect(titleElement).toBeInTheDocument();
+
+    const statusElement = screen.getByText('Incomplete');
+    expect(statusElement).toBeInTheDocument();
   });
 });
