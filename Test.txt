@@ -1,14 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import { updateTaskState } from './pages'; // Import the function to be tested
 
-// Mock the Pages component
-jest.mock('./components/pages/pages', () => {
-  return () => <div data-testid="mocked-pages">Mocked Pages Component</div>;
-});
+describe('updateTaskState function', () => {
+  it('updates task state correctly', () => {
+    const tasks = [
+      { id: 1, title: 'Task 1', completed: false },
+      { id: 2, title: 'Task 2', completed: true },
+    ];
 
-test('renders the App component', () => {
-  const { getByTestId } = render(<App />);
-  const appElement = getByTestId('mocked-pages');
-  expect(appElement).toBeInTheDocument();
+    const updatedTask = { id: 2, title: 'Updated Task 2', completed: false };
+
+    const updatedTasks = updateTaskState(tasks, updatedTask);
+
+    expect(updatedTasks).toHaveLength(2); // Ensure the length of the updated tasks array remains the same
+    expect(updatedTasks[1].title).toBe('Updated Task 2'); // Ensure the title of the updated task is correct
+    expect(updatedTasks[1].completed).toBe(false); // Ensure the completed status of the updated task is correct
+  });
 });
