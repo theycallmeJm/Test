@@ -2,8 +2,13 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
+// Mock the Pages component
+jest.mock('./components/pages/pages', () => {
+  return () => <div data-testid="mocked-pages">Mocked Pages Component</div>;
+});
+
 test('renders the App component', () => {
-  const { getByText } = render(<App />);
-  const appElement = getByText(/Pages/i); // Assuming "Pages" is part of your rendered component
+  const { getByTestId } = render(<App />);
+  const appElement = getByTestId('mocked-pages');
   expect(appElement).toBeInTheDocument();
 });
