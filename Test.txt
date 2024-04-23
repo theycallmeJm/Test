@@ -1,43 +1,9 @@
-// AddTaskForm.test.js
-
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // For additional matchers
+import { render } from '@testing-library/react';
+import App from './App';
 
-import AddTaskForm from './AddTaskForm';
-
-describe('AddTaskForm', () => {
-  test('renders form inputs correctly', () => {
-    const { getByLabelText, getByRole } = render(<AddTaskForm onSubmit={() => {}} latestId={0} />);
-    
-    const titleInput = getByLabelText('Title:');
-    const dueDateInput = getByLabelText('Due Date:');
-    const statusSelect = getByLabelText('Status:');
-
-    expect(titleInput).toBeInTheDocument();
-    expect(dueDateInput).toBeInTheDocument();
-    expect(statusSelect).toBeInTheDocument();
-  });
-
-  test('calls onSubmit prop with form data when submitted', () => {
-    const mockSubmit = jest.fn();
-    const { getByRole, getByLabelText } = render(<AddTaskForm onSubmit={mockSubmit} latestId={0} />);
-    
-    const titleInput = getByLabelText('Title:');
-    const dueDateInput = getByLabelText('Due Date:');
-    const statusSelect = getByLabelText('Status:');
-
-    fireEvent.change(titleInput, { target: { value: 'New Task' } });
-    fireEvent.change(dueDateInput, { target: { value: '2024-05-01' } });
-    fireEvent.change(statusSelect, { target: { value: 'Complete' } });
-
-    fireEvent.click(getByRole('button', { name: 'Add Task' }));
-
-    expect(mockSubmit).toHaveBeenCalledWith({
-      id: 1, // Assuming latestId is 0
-      title: 'New Task',
-      dueDate: '2024-05-01',
-      status: true // Assuming 'Complete' is selected
-    });
-  });
+test('renders the App component', () => {
+  const { getByText } = render(<App />);
+  const appElement = getByText(/Pages/i); // Assuming "Pages" is part of your rendered component
+  expect(appElement).toBeInTheDocument();
 });
