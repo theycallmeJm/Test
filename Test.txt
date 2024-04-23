@@ -1,28 +1,43 @@
-// app.jsx
+// AddTaskForm.test.js
 
-import React, { useState } from 'react';
-import TaskList from './TaskList';
-import TaskDetail from './TaskDetail';
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'; // For additional matchers
+
 import AddTaskForm from './AddTaskForm';
 
-const App = () => {
-  const [tasks, setTasks] = useState([]); // Assuming tasks state is managed here
+describe('AddTaskForm', () => {
+  test('renders form inputs correctly', () => {
+    const { getByLabelText, getByRole } = render(<AddTaskForm onSubmit={() => {}} latestId={0} />);
+    
+    const titleInput = getByLabelText('Title:');
+    const dueDateInput = getByLabelText('Due Date:');
+    const statusSelect = getByLabelText('Status:');
 
-  // Function to handle form submission and add a new task
-  const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask]);
-  };
+    expect(titleInput).toBeInTheDocument();
+    expect(dueDateInput).toBeInTheDocument();
+    expect(statusSelect).toBeInTheDocument();
+  });
 
-  // Assuming other functions and state for task management are defined here
+  test('calls onSubmit prop with form data when submitted', () => {
+    const mockSubmit = jest.fn();
+    const { getByRole, getByLabelText } = render(<AddTaskForm onSubmit={mockSubmit} latestId={0} />);
+    
+    const titleInput = getByLabelText('Title:');
+    const dueDateInput = getByLabelText('Due Date:');
+    const statusSelect = getByLabelText('Status:');
 
-  return (
-    <div>
-      <h1>Task Manager</h1>
-      <AddTaskForm onSubmit={handleAddTask} latestId={tasks.length ? tasks[tasks.length - 1].id : 0} />
-      <TaskList tasks={tasks} />
-      <TaskDetail /> {/* Assuming TaskDetail component is rendered somewhere */}
-    </div>
-  );
-};
+    fireEvent.change(titleInput, { target: { value: 'New Task' } });
+    fireEvent.change(dueDateInput, { target: { value: '2024-05-01' } });
+    fireEvent.change(statusSelect, { target: { value: 'Complete' } });
 
-export default App;
+    fireEvent.click(getByRole('button', { name: 'Add Task' }));
+
+    expect(mockSubmit).toHaveBeenCalledWith({
+      id: 1, // Assuming latestId is 0
+      title: 'New Task',
+      dueDate: '2024-05-01',
+      status: true // Assuming 'Complete' is selected
+    });
+  });
+});
